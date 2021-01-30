@@ -14,6 +14,7 @@ public:
 	void render(SDL_Renderer* renderer);
 	Stefan getStefan();
 	void reduceMotivation();
+	void setMotivation(int value);
 private:
 	Stefan stefan;
 	Graph attachedEffect;

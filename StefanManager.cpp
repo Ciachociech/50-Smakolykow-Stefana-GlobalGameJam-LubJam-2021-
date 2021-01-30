@@ -96,3 +96,9 @@ void StefanManager::render(SDL_Renderer* renderer)
 Stefan StefanManager::getStefan() { return stefan; }
 
 void StefanManager::reduceMotivation() { stefan.setMotivation(stefan.getMotivation() - 1); }
+
+void StefanManager::setMotivation(int value) 
+{
+	baseMotivation = value;
+	stefan.setMotivation(value);
+}

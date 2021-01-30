@@ -18,10 +18,18 @@ SDL_Renderer* windowRenderer = NULL;
 //Other constants
 const int FPS = 60;
 
+//Managers and game global params
+LayerManager lm = LayerManager();
+TreasureManager tm = TreasureManager();
+StefanManager sm = StefanManager();
+SteeringManager sterman = SteeringManager();
+int level = 1;
+
 bool init();
 bool loadMedia();
 void close();
 bool loop();
+void gameInit();
 
 int main(int argc, char* args[])
 {
@@ -89,17 +97,7 @@ bool loop()
 	bool quit = false;
 	SDL_Event event;
 
-	LayerManager lm = LayerManager();
-	lm.addLayer(0, windowRenderer);
-	lm.addLayer(1, windowRenderer);
-
-	StefanManager sm = StefanManager(60);
-	sm.setStefan(windowRenderer);
-
-	SteeringManager sterman = SteeringManager();
-
-	TreasureManager tm = TreasureManager();
-	tm.randomizeTreasures(windowRenderer);
+	gameInit();
 
 	int tileX = 0, tileY = 0;
 	Uint32 frameTime;
@@ -127,14 +125,19 @@ bool loop()
 		if (actualAction == keyAction::digging) 
 		{
 			bool dug = lm.disableTile(sm.getStefan().X(), sm.getStefan().Y());
-			if (dug) { sm.reduceMotivation(); /*printf("Motivation left: %i", sm.getStefan().getMotivation());*/ }
+			if (dug) { sm.reduceMotivation(); printf("Motivation left: %i\n", sm.getStefan().getMotivation()); }
 			if (sm.getStefan().getMotivation() <= 0) 
 			{ 
 				printf("You lose!"); 
+				SDL_Delay(2000);
+				quit = true;
 			}
 			if (tm.checkTile(sm.getStefan().X(), sm.getStefan().Y()) && tm.getFramesLeft() == 0) 
 			{
 				printf("You won!");
+				level++;
+				gameInit();
+				SDL_Delay(2000);
 			}
 		}
 		if (actualAction == keyAction::mischievous) 
@@ -172,5 +175,16 @@ bool loop()
 	}
 
 	return true;
+}
+
+void gameInit()
+{
+	lm.addLayer(0, windowRenderer);
+	lm.addLayer(1, windowRenderer);
+
+	tm.randomizeTreasures(windowRenderer);
+
+	sm.setStefan(windowRenderer);
+	sm.setMotivation(79 - (level > 10 ? 20 : 2 * level) + 4 * tm.getCount());
 }
 
