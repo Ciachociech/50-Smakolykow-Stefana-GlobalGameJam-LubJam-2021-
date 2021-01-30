@@ -1,5 +1,6 @@
 //To not making mess in includes
 #include "external_dependencies.h"
+#include "opengl_dependencies.h"
 
 #include "LayerManager.h"
 #include "StefanManager.h"
@@ -13,6 +14,9 @@ const int SCREEN_HEIGHT = 720;
 SDL_Window* window = NULL;
 SDL_Surface* windowSurface = NULL;
 SDL_Renderer* windowRenderer = NULL;
+
+//Other constants
+const int FPS = 60;
 
 bool init();
 bool loadMedia();
@@ -94,10 +98,14 @@ bool loop()
 	SteeringManager sterman = SteeringManager();
 
 	int tileX = 0, tileY = 0;
+	Uint32 frameTime;
+
+	SDL_SetRenderDrawColor(windowRenderer, 32, 32, 32, 0xFF);
 
 	while (!quit)
 	{
 		tileX = 0, tileY = 0;
+		frameTime = SDL_GetTicks();
 		
 		while (SDL_PollEvent(&event) != 0)
 		{
@@ -113,16 +121,18 @@ bool loop()
 
 		sm.moveStefan(tileX, tileY);
 
-		SDL_SetRenderDrawColor(windowRenderer, 32, 32, 32, 0xFF);
 		SDL_RenderClear(windowRenderer);
 
 		lm.render(0, 0, windowRenderer);
 		sm.render(windowRenderer);
 
-		SDL_UpdateWindowSurface(window);
+		//SDL_UpdateWindowSurface(window);
 		SDL_RenderPresent(windowRenderer);
 
-		SDL_Delay(33);
+		printf("Frame time: %i \n", SDL_GetTicks() - frameTime);
+
+		if((SDL_GetTicks() - frameTime) < (1000.f / FPS))
+		SDL_Delay((1000.f / FPS) - (SDL_GetTicks() - frameTime));
 	}
 
 	return true;

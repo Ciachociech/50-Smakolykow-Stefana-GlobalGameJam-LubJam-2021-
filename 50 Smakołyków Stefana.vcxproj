@@ -153,6 +153,7 @@
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GraphLayer.h" />
     <ClInclude Include="LayerManager.h" />
+    <ClInclude Include="opengl_dependencies.h" />
     <ClInclude Include="OverworldRandomizer.h" />
     <ClInclude Include="SteeringManager.h" />
     <ClInclude Include="Stefan.h" />
