@@ -13,6 +13,8 @@ public:
 	void render(SDL_Renderer* renderer);
 private:
 	Stefan stefan;
+	Graph attachedEffect;
 	bool isMoving;
 	int destX, destY;
+	Uint32 effectStart;
 };
