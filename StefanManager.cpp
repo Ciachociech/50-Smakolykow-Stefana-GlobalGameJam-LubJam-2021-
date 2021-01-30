@@ -10,7 +10,7 @@ StefanManager::~StefanManager()
 void StefanManager::setStefan(SDL_Renderer* renderer)
 {
 	stefan = Stefan(584 + 32 * 10, 24 + 32 * 10);
-	stefan.loadFromFile(1.f, 1.f, "stefan.bmp", renderer);
+	stefan.loadFromFile(1.f, 1.f, "Assets/stefan.png", renderer);
 }
 
 void StefanManager::moveStefan(int tileX, int tileY)
