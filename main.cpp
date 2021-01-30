@@ -93,14 +93,13 @@ bool loop()
 	lm.addLayer(0, windowRenderer);
 	lm.addLayer(1, windowRenderer);
 
-	StefanManager sm = StefanManager();
+	StefanManager sm = StefanManager(60);
 	sm.setStefan(windowRenderer);
 
 	SteeringManager sterman = SteeringManager();
 
 	TreasureManager tm = TreasureManager();
 	tm.randomizeTreasures(windowRenderer);
-	printf("Sa %i smakolyki na %i kratkach\n", tm.getCount(), tm.getFramesLeft());
 
 	int tileX = 0, tileY = 0;
 	Uint32 frameTime;
@@ -128,8 +127,15 @@ bool loop()
 		if (actualAction == keyAction::digging) 
 		{
 			bool dug = lm.disableTile(sm.getStefan().X(), sm.getStefan().Y());
-			if (dug) { sm.reduceMotivation(); }
-			if (tm.checkTile(sm.getStefan().X(), sm.getStefan().Y())) { tm.getFramesLeft()); }
+			if (dug) { sm.reduceMotivation(); /*printf("Motivation left: %i", sm.getStefan().getMotivation());*/ }
+			if (sm.getStefan().getMotivation() <= 0) 
+			{ 
+				printf("You lose!"); 
+			}
+			if (tm.checkTile(sm.getStefan().X(), sm.getStefan().Y()) && tm.getFramesLeft() == 0) 
+			{
+				printf("You won!");
+			}
 		}
 		if (actualAction == keyAction::mischievous) 
 		{

@@ -5,6 +5,7 @@ class StefanManager
 {
 public:
 	StefanManager();
+	StefanManager(int baseMotivation);
 	virtual ~StefanManager();
 
 	void setStefan(SDL_Renderer* renderer);
@@ -19,4 +20,5 @@ private:
 	bool isMoving;
 	int destX, destY;
 	Uint32 effectStart;
+	int baseMotivation;
 };

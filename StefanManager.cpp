@@ -1,6 +1,8 @@
 #include "StefanManager.h"
 
-StefanManager::StefanManager() : isMoving(false), destX(0), destY(0), attachedEffect(), effectStart(0) {}
+StefanManager::StefanManager() : isMoving(false), destX(0), destY(0), attachedEffect(), effectStart(0), baseMotivation(0) {}
+
+StefanManager::StefanManager(int baseMotivation) : isMoving(false), destX(0), destY(0), attachedEffect(), effectStart(0), baseMotivation(baseMotivation) {}
 
 StefanManager::~StefanManager()
 {
@@ -10,7 +12,8 @@ StefanManager::~StefanManager()
 
 void StefanManager::setStefan(SDL_Renderer* renderer)
 {
-	stefan = Stefan(584 + 32 * 10, 24 + 32 * 10);
+	if (baseMotivation > 0) { stefan = Stefan(584 + 32 * 10, 24 + 32 * 10, baseMotivation); }
+	else { stefan = Stefan(584 + 32 * 10, 24 + 32 * 10); }
 	stefan.loadFromFile(1.f, 1.f, 2, "Assets/stefan_idle.png", renderer);
 	attachedEffect = Graph(584 + 320, 24 + 320 - 16);
 	attachedEffect.loadFromFile(1.f, 1.f, 4, "Assets/confuse.png", renderer);
