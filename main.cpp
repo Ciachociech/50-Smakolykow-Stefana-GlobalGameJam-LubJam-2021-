@@ -153,7 +153,7 @@ bool loop()
 
 		lm.render(0, 0, 0, windowRenderer);
 		tm.render(windowRenderer);
-		//lm.render(1, 0, 0, windowRenderer);
+		lm.render(0, 0, 1, windowRenderer);
 		sm.render(windowRenderer);
 
 		//SDL_UpdateWindowSurface(window);
