@@ -100,6 +100,7 @@ bool loop()
 
 	TreasureManager tm = TreasureManager();
 	tm.randomizeTreasures(windowRenderer);
+	printf("Sa %i smakolyki na %i kratkach\n", tm.getCount(), tm.getFramesLeft());
 
 	int tileX = 0, tileY = 0;
 	Uint32 frameTime;
@@ -128,6 +129,7 @@ bool loop()
 		{
 			bool dug = lm.disableTile(sm.getStefan().X(), sm.getStefan().Y());
 			if (dug) { sm.reduceMotivation(); }
+			if (tm.checkTile(sm.getStefan().X(), sm.getStefan().Y())) { tm.getFramesLeft()); }
 		}
 		if (actualAction == keyAction::mischievous) 
 		{

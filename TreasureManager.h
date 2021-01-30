@@ -17,10 +17,23 @@ public:
 	void render(SDL_Renderer* renderer);
 
 	int getCount();
+	int getFramesLeft();
+	bool checkTile(int x, int y);
 private:
+	
+	struct CoordsPair
+	{
+		CoordsPair(int x, int y) : x(x), y(y) {}
+		int x;
+		int y;
+	};
+	typedef std::vector<CoordsPair> VecPair;
+	
 	VecTreasures treasures;
 	int count;
 	OverworldRandomizer overand;
+	int framesLeft;
+	VecPair pairs;
 
 	treasureType randomizeType();
 };
