@@ -130,8 +130,6 @@ bool loop()
 		//SDL_UpdateWindowSurface(window);
 		SDL_RenderPresent(windowRenderer);
 
-		printf("Frame time: %i \n", SDL_GetTicks() - frameTime);
-
 		if((SDL_GetTicks() - frameTime) < (1000.f / FPS))
 		SDL_Delay((1000.f / FPS) - (SDL_GetTicks() - frameTime));
 	}

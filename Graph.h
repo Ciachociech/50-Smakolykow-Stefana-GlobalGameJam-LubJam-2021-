@@ -10,6 +10,7 @@ public:
 	virtual ~Graph();
 
 	bool loadFromFile(float scaleX, float scaleY, std::string filepath, SDL_Renderer* renderer);
+	bool loadFromFile(float scaleX, float scaleY, int frames, std::string filepath, SDL_Renderer* renderer);
 	void free();
 	virtual void render(int x, int y, SDL_Renderer* renderer);
 	virtual void render(SDL_Renderer* renderer);
@@ -24,5 +25,6 @@ private:
 	int x, y;
 	int w, h;
 	float scaleX, scaleY;
+	int frames, currentFrame = 0;
 };
 

@@ -11,9 +11,9 @@ StefanManager::~StefanManager()
 void StefanManager::setStefan(SDL_Renderer* renderer)
 {
 	stefan = Stefan(584 + 32 * 10, 24 + 32 * 10);
-	stefan.loadFromFile(1.f, 1.f, "Assets/stefan.png", renderer);
+	stefan.loadFromFile(1.f, 1.f, 2, "Assets/stefan_idle.png", renderer);
 	attachedEffect = Graph(584 + 320, 24 + 320 - 16);
-	attachedEffect.loadFromFile(1.f, 1.f, "Assets/confuseOne.png", renderer);
+	attachedEffect.loadFromFile(1.f, 1.f, 4, "Assets/confuse.png", renderer);
 }
 
 void StefanManager::moveStefan(int tileX, int tileY)
