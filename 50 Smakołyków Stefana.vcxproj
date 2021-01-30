@@ -143,12 +143,18 @@
     <ClCompile Include="GraphLayer.cpp" />
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SteeringManager.cpp" />
+    <ClCompile Include="Stefan.cpp" />
+    <ClCompile Include="StefanManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external_dependencies.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GraphLayer.h" />
     <ClInclude Include="LayerManager.h" />
+    <ClInclude Include="SteeringManager.h" />
+    <ClInclude Include="Stefan.h" />
+    <ClInclude Include="StefanManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

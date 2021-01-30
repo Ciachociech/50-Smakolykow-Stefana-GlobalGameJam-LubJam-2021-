@@ -7,7 +7,7 @@ LayerManager::~LayerManager() {}
 void LayerManager::addLayer(SDL_Renderer* renderer)
 {
 	layers.push_back(std::make_unique<GraphLayer>());
-	layers.back()->loadFromFile(400, 400, 1.f, 1.f, "stefan.bmp", renderer);
+	layers.back()->loadFromFile(0, 0, 1.f, 1.f, "Assets/debug_background.bmp", renderer);
 }
 
 void LayerManager::render(int x, int y, SDL_Renderer* renderer)

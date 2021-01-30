@@ -2,6 +2,8 @@
 #include "external_dependencies.h"
 
 #include "LayerManager.h"
+#include "StefanManager.h"
+#include "SteeringManager.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;
@@ -83,23 +85,39 @@ bool loop()
 	bool quit = false;
 	SDL_Event event;
 
-	LayerManager lm;
+	LayerManager lm = LayerManager();
 	lm.addLayer(windowRenderer);
+
+	StefanManager sm = StefanManager();
+	sm.setStefan(windowRenderer);
+
+	SteeringManager sterman = SteeringManager();
+
+	int tileX = 0, tileY = 0;
 
 	while (!quit)
 	{
+		tileX = 0, tileY = 0;
+		
 		while (SDL_PollEvent(&event) != 0)
 		{
 			switch (event.type)
 			{
 				case SDL_QUIT: { quit = true; break; }
+				case SDL_KEYDOWN:
+				{
+					sterman.keyboardMovement(tileX, tileY, event.key.keysym.sym); break;
+				}
 			}
 		}
 
-		SDL_SetRenderDrawColor(windowRenderer, 192, 192, 192, 0xFF);
+		sm.moveStefan(tileX, tileY);
+
+		SDL_SetRenderDrawColor(windowRenderer, 32, 32, 32, 0xFF);
 		SDL_RenderClear(windowRenderer);
 
 		lm.render(0, 0, windowRenderer);
+		sm.render(windowRenderer);
 
 		SDL_UpdateWindowSurface(window);
 		SDL_RenderPresent(windowRenderer);
