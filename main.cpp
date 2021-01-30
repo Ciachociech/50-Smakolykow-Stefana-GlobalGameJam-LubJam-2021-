@@ -100,6 +100,7 @@ bool loop()
 
 	int tileX = 0, tileY = 0;
 	Uint32 frameTime;
+	keyAction actualAction;
 
 	SDL_SetRenderDrawColor(windowRenderer, 32, 32, 32, 0xFF);
 
@@ -107,20 +108,39 @@ bool loop()
 	{
 		tileX = 0, tileY = 0;
 		frameTime = SDL_GetTicks();
+		actualAction = keyAction::none;
 		
 		while (SDL_PollEvent(&event) != 0)
 		{
 			switch (event.type)
 			{
 				case SDL_QUIT: { quit = true; break; }
-				case SDL_KEYDOWN:
-				{
-					sterman.keyboardMovement(tileX, tileY, event.key.keysym.sym); break;
-				}
+				case SDL_KEYDOWN: { actualAction = sterman.keyboardMovement(tileX, tileY, event.key.keysym.sym); break; }
+				default: { break; }
 			}
 		}
 
 		sm.moveStefan(tileX, tileY);
+		if (actualAction == keyAction::digging) {}
+		if (actualAction == keyAction::mischievous) 
+		{
+			bool loop = true;
+			SDL_Event event;
+			while (loop)
+			{
+				while (SDL_PollEvent(&event) != 0)
+				{
+					switch (event.type)
+					{
+					case SDL_QUIT: case SDL_KEYDOWN: { loop = false; break; }
+					}
+				}
+				SDL_RenderClear(windowRenderer);
+				lm.render(-1, windowRenderer);
+				SDL_RenderPresent(windowRenderer);
+			}
+
+		}
 
 		SDL_RenderClear(windowRenderer);
 

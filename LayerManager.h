@@ -13,9 +13,10 @@ public:
 
 	void addLayer(int mode, SDL_Renderer* renderer);
 	void render(int x, int y, SDL_Renderer* renderer);
+	void render(int mode, SDL_Renderer* renderer);
 private:
 	VecGraphLayer layers;
 	void modeInterpreter(int mode, SDL_Renderer* renderer);
 	OverworldRandomizer overand;
+	Graph bonus;
 };
-

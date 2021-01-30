@@ -1,6 +1,6 @@
 #include "LayerManager.h"
 
-LayerManager::LayerManager() : layers(), overand() {}
+LayerManager::LayerManager() : layers(), overand(), bonus() {}
 
 LayerManager::~LayerManager() {}
 
@@ -18,23 +18,29 @@ void LayerManager::render(int x, int y, SDL_Renderer* renderer)
 	}
 }
 
+void LayerManager::render(int mode, SDL_Renderer* renderer)
+{
+	if (mode == -1) { bonus.render(renderer); }
+}
+
 void LayerManager::modeInterpreter(int mode, SDL_Renderer* renderer)
 {
 	switch (mode)
 	{
-	case 0: 
-	{ 
-		layers.back()->loadFromFile(0, 0, 1.f, 1.f, "Assets/debug_background.png", renderer); 
-		layers.back()->loadFromFile(584, 24, 1.f, 1.f, "Assets/boardEmpty.png", renderer); 
+	case 0:
+	{
+		layers.back()->loadFromFile(0, 0, 1.f, 1.f, "Assets/debug_background.png", renderer);
+		layers.back()->loadFromFile(584, 24, 1.f, 1.f, "Assets/boardEmpty.png", renderer);
 		layers.back()->loadFromFile(584 + 32 * 5, 24 + 32 * 5, 1.f, 1.f, "Assets/innerWall.png", renderer);
 		layers.back()->loadFromFile(584 + 32 * 5, 24 + 32 * 13, 1.f, 1.f, "Assets/innerWall.png", renderer);
-		layers.back()->loadFromFile(584 + 32 * 13, 24 + 32 * 5, 1.f, 1.f, "Assets/innerWall.png", renderer); 
+		layers.back()->loadFromFile(584 + 32 * 13, 24 + 32 * 5, 1.f, 1.f, "Assets/innerWall.png", renderer);
 		layers.back()->loadFromFile(584 + 32 * 13, 24 + 32 * 13, 1.f, 1.f, "Assets/innerWall.png", renderer);
-
+		modeInterpreter(-1, renderer);
 		break;
 	}
-	case 1: 
-	{ 
+	case -1: { bonus = Graph(0, 0); bonus.loadFromFile(1.f, 1.f, "Assets/haveANiceDay.png", renderer); break; }
+	case 1:
+	{
 		for (int r = 0; r < 21; r++)
 		{
 			for (int c = 0; c < 21; c++)
