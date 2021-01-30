@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GraphLayer.h"
+#include "OverworldRandomizer.h"
 
 typedef std::vector<std::unique_ptr<GraphLayer>> VecGraphLayer;
 
@@ -14,5 +15,6 @@ public:
 	void render(int x, int y, SDL_Renderer* renderer);
 private:
 	VecGraphLayer layers;
+	OverworldRandomizer overand;
 };
 
