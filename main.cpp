@@ -90,7 +90,8 @@ bool loop()
 	SDL_Event event;
 
 	LayerManager lm = LayerManager();
-	lm.addLayer(windowRenderer);
+	lm.addLayer(0, windowRenderer);
+	lm.addLayer(1, windowRenderer);
 
 	StefanManager sm = StefanManager();
 	sm.setStefan(windowRenderer);
