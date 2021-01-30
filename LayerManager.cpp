@@ -34,7 +34,21 @@ void LayerManager::modeInterpreter(int mode, SDL_Renderer* renderer)
 	{
 	case 0:
 	{
+		//ramka
 		layers.back()->loadFromFile(0, 0, 1.f, 1.f, "Assets/debug_background.png", renderer);
+		layers.back()->loadFromFile(0, 0, 1.f, 1.f, "Assets/frameCone.png", renderer);
+		layers.back()->loadFromFile(24, 0, 51.34f, 1.f, "Assets/frameH.png", renderer);
+		layers.back()->loadFromFile(560, 0, 1.f, 1.f, "Assets/frameCone.png", renderer);
+		layers.back()->loadFromFile(1256, 0, 1.f, 1.f, "Assets/frameCone.png", renderer);
+		layers.back()->loadFromFile(0, 696, 1.f, 1.f, "Assets/frameCone.png", renderer);
+		layers.back()->loadFromFile(24, 696, 51.34f, 1.f, "Assets/frameH.png", renderer);
+		layers.back()->loadFromFile(560, 696, 1.f, 1.f, "Assets/frameCone.png", renderer);
+		layers.back()->loadFromFile(1256, 696, 1.f, 1.f, "Assets/frameCone.png", renderer);
+		layers.back()->loadFromFile(0, 24, 1.f, 28.f, "Assets/frameV.png", renderer);
+		layers.back()->loadFromFile(560, 24, 1.f, 28.f, "Assets/frameV.png", renderer);
+		layers.back()->loadFromFile(1256, 24, 1.f, 28.f, "Assets/frameV.png", renderer);
+
+		//pole
 		layers.back()->loadFromFile(584, 24, 1.f, 1.f, "Assets/boardEmpty.png", renderer);
 		layers.back()->loadFromFile(584 + 32 * 5, 24 + 32 * 5, 1.f, 1.f, "Assets/innerWall.png", renderer);
 		layers.back()->loadFromFile(584 + 32 * 5, 24 + 32 * 13, 1.f, 1.f, "Assets/innerWall.png", renderer);
