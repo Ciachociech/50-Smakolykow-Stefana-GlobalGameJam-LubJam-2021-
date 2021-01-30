@@ -23,6 +23,15 @@ void LayerManager::render(int mode, SDL_Renderer* renderer)
 	if (mode == -1) { bonus.render(renderer); }
 }
 
+void LayerManager::render(int x, int y, int mode, SDL_Renderer* renderer)
+{
+	if (mode == -1) { bonus.render(x, y, renderer); }
+	else if (mode >= 0 && mode < layers.size())
+	{
+		layers[mode]->render(x, y, renderer);
+	}
+}
+
 bool LayerManager::disableTile(int x, int y)
 {
 	return layers[1]->remove(x, y);

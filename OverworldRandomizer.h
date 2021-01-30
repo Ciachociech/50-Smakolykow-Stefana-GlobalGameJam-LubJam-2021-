@@ -8,6 +8,7 @@ public:
 	virtual ~OverworldRandomizer();
 	SDL_Color randomColor();
 	int randomNumber(int min, int max);
+	void randomCoordsTreasure(int& x, int& y);
 private:
 	std::default_random_engine gen;
 }; 

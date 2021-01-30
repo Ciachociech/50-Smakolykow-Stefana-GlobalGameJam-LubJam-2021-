@@ -147,17 +147,20 @@
     <ClCompile Include="SteeringManager.cpp" />
     <ClCompile Include="Stefan.cpp" />
     <ClCompile Include="StefanManager.cpp" />
+    <ClCompile Include="Treasure.cpp" />
+    <ClCompile Include="TreasureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external_dependencies.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GraphLayer.h" />
     <ClInclude Include="LayerManager.h" />
-    <ClInclude Include="opengl_dependencies.h" />
     <ClInclude Include="OverworldRandomizer.h" />
     <ClInclude Include="SteeringManager.h" />
     <ClInclude Include="Stefan.h" />
     <ClInclude Include="StefanManager.h" />
+    <ClInclude Include="Treasure.h" />
+    <ClInclude Include="TreasureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

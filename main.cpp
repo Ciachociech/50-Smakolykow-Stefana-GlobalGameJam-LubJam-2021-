@@ -1,10 +1,10 @@
 //To not making mess in includes
 #include "external_dependencies.h"
-#include "opengl_dependencies.h"
 
 #include "LayerManager.h"
 #include "StefanManager.h"
 #include "SteeringManager.h"
+#include "TreasureManager.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;
@@ -98,6 +98,9 @@ bool loop()
 
 	SteeringManager sterman = SteeringManager();
 
+	TreasureManager tm = TreasureManager();
+	tm.randomizeTreasures(windowRenderer);
+
 	int tileX = 0, tileY = 0;
 	Uint32 frameTime;
 	keyAction actualAction;
@@ -148,7 +151,9 @@ bool loop()
 
 		SDL_RenderClear(windowRenderer);
 
-		lm.render(0, 0, windowRenderer);
+		lm.render(0, 0, 0, windowRenderer);
+		tm.render(windowRenderer);
+		//lm.render(1, 0, 0, windowRenderer);
 		sm.render(windowRenderer);
 
 		//SDL_UpdateWindowSurface(window);

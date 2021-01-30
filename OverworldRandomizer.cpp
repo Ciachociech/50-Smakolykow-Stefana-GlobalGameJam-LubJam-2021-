@@ -24,3 +24,20 @@ int OverworldRandomizer::randomNumber(int min, int max)
     std::uniform_int_distribution<int> distI(min, max);
     return distI(gen);
 }
+
+void OverworldRandomizer::randomCoordsTreasure(int& x, int& y)
+{
+    bool isTaboo;
+    do
+    {
+        isTaboo = false;
+        x = 584 + 32 * randomNumber(0, 19), y = 24 + 32 * randomNumber(0, 19);
+
+        //Near internal walls
+        if ((x >= 712 && x <= 840) || (x >= 968 && x <= 1096))
+        {
+            if ((y >= 152 && y <= 280) || (y >= 408 && y <= 536))
+            { isTaboo = true; }
+        }
+    } while (isTaboo);
+}
