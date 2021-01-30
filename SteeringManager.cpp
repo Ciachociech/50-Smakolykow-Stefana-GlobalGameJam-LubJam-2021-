@@ -7,7 +7,6 @@ SteeringManager::~SteeringManager() {}
 keyAction SteeringManager::keyboardMovement(int& x, int& y, SDL_Keycode keycode)
 {
     checkMischievousCombo(keycode);
-    printf("Combo: %i\n", combo);
 
     if (keycode == SDLK_w || keycode == SDLK_UP) { y = -2; return keyAction::moving; }
     else if (keycode == SDLK_s || keycode == SDLK_DOWN) { y = 2; return keyAction::moving; }

@@ -39,3 +39,12 @@ void GraphLayer::render(int x, int y, int height, bool isAbove, SDL_Renderer* re
 		if (performRender) { elements[i]->render(x, y, renderer); }
 	}
 }
+
+bool GraphLayer::remove(int x, int y)
+{
+	for (int i = 0; i < elements.size(); i++)
+	{
+		if (elements[i]->X() == x && elements[i]->Y() == y) { elements.erase(elements.begin() + i); return true; }
+	}
+	return false;
+}

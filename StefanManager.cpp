@@ -89,3 +89,7 @@ void StefanManager::render(SDL_Renderer* renderer)
 	stefan.render(renderer);
 	if (stefan.getConfusion()) { attachedEffect.render(renderer); }
 }
+
+Stefan StefanManager::getStefan() { return stefan; }
+
+void StefanManager::reduceMotivation() { stefan.setMotivation(stefan.getMotivation() - 1); }

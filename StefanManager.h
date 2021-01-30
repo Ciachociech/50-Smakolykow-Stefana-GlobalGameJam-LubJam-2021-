@@ -11,6 +11,8 @@ public:
 	void moveStefan(int tileX, int tileY);
 
 	void render(SDL_Renderer* renderer);
+	Stefan getStefan();
+	void reduceMotivation();
 private:
 	Stefan stefan;
 	Graph attachedEffect;

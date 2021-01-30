@@ -121,7 +121,11 @@ bool loop()
 		}
 
 		sm.moveStefan(tileX, tileY);
-		if (actualAction == keyAction::digging) {}
+		if (actualAction == keyAction::digging) 
+		{
+			bool dug = lm.disableTile(sm.getStefan().X(), sm.getStefan().Y());
+			if (dug) { sm.reduceMotivation(); }
+		}
 		if (actualAction == keyAction::mischievous) 
 		{
 			bool loop = true;
