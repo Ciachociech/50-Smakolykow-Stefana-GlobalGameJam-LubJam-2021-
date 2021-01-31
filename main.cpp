@@ -19,6 +19,7 @@ TTF_Font* font = NULL;
 
 //Other constants
 const int FPS = 60;
+const std::string logoPath = "Assets/appLogo.png";
 
 //Managers and game global params
 LayerManager lm = LayerManager();
@@ -57,8 +58,7 @@ bool init()
 	}
 	else
 	{
-		window = SDL_CreateWindow(u8"50 Smako³yków Stefana", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		//window = SDL_CreateWindow(u8"50 Smakolykow Stefana", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN); //uncomment at the end
+		window = SDL_CreateWindow(u8"50 Smako³yków Stefana (LUBie¿na Edycja)", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -93,7 +93,16 @@ bool loadMedia()
 {
 	bool success = true;
 
-	//https://www.dafont.com/wash-your-hand.font
+	//loading game logo
+	SDL_Surface* surface = IMG_Load(logoPath.c_str());
+	if (surface == NULL) { printf("Unable to load image %s! SDL Error: %s\n", logoPath.c_str(), SDL_GetError()); }
+	else
+	{
+		SDL_SetWindowIcon(window, surface);
+	}
+	SDL_FreeSurface(surface);
+
+	//loading font => source - https://www.dafont.com/wash-your-hand.font
 	font = TTF_OpenFont("Assets/WashYourHand.ttf", 32);
 	if (font == NULL)
 	{
