@@ -48,3 +48,5 @@ bool GraphLayer::remove(int x, int y)
 	}
 	return false;
 }
+
+void GraphLayer::exterminate() { elements.clear(); }

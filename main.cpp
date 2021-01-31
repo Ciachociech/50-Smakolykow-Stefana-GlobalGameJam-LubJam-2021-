@@ -125,7 +125,7 @@ bool loop()
 		if (actualAction == keyAction::digging) 
 		{
 			bool dug = lm.disableTile(sm.getStefan().X(), sm.getStefan().Y());
-			if (dug) { sm.reduceMotivation(); printf("Motivation left: %i\n", sm.getStefan().getMotivation()); }
+			if (dug) { sm.reduceMotivation(); }
 			if (sm.getStefan().getMotivation() <= 0) 
 			{ 
 				printf("You lose!"); 
@@ -179,11 +179,14 @@ bool loop()
 
 void gameInit()
 {
+	lm.exterminate();
 	lm.addLayer(0, windowRenderer);
 	lm.addLayer(1, windowRenderer);
-
+	
+	tm.exterminate();
 	tm.randomizeTreasures(windowRenderer);
 
+	sm.exterminate();
 	sm.setStefan(windowRenderer);
 	sm.setMotivation(79 - (level > 10 ? 20 : 2 * level) + 4 * tm.getCount());
 }

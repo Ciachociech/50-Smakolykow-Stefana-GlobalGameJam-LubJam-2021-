@@ -17,7 +17,7 @@ keyAction SteeringManager::keyboardMovement(int& x, int& y, SDL_Keycode keycode)
     }
     else if (keycode == SDLK_d || keycode == SDLK_RIGHT) { x = 2; return keyAction::moving; }
 
-    if (keycode == SDLK_z) { return keyAction::digging; }
+    if (keycode == SDLK_l) { return keyAction::digging; }
 
     return keyAction::none;
 }

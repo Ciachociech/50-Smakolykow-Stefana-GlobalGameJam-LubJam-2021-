@@ -37,6 +37,16 @@ bool LayerManager::disableTile(int x, int y)
 	return layers[1]->remove(x, y);
 }
 
+void LayerManager::exterminate()
+{
+	bonus.free();
+	for (int i = 0; i < layers.size(); i++)
+	{
+		layers[i]->exterminate();
+	}
+	layers.clear();
+}
+
 void LayerManager::modeInterpreter(int mode, SDL_Renderer* renderer)
 {
 	switch (mode)

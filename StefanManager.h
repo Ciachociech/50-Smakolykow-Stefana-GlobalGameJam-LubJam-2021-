@@ -15,6 +15,8 @@ public:
 	Stefan getStefan();
 	void reduceMotivation();
 	void setMotivation(int value);
+
+	void exterminate();
 private:
 	Stefan stefan;
 	Graph attachedEffect;

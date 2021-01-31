@@ -19,6 +19,8 @@ public:
 	int getCount();
 	int getFramesLeft();
 	bool checkTile(int x, int y);
+
+	void exterminate();
 private:
 	
 	struct CoordsPair

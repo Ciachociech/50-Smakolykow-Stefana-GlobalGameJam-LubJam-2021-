@@ -15,6 +15,7 @@ public:
 	virtual void render(int x, int y, int height, bool isAbove, SDL_Renderer* renderer);
 
 	bool remove(int x, int y);
+	void exterminate();
 private:
 	VecGraph elements;
 };

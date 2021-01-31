@@ -102,3 +102,10 @@ void StefanManager::setMotivation(int value)
 	baseMotivation = value;
 	stefan.setMotivation(value);
 }
+
+void StefanManager::exterminate()
+{
+	stefan.free();
+	attachedEffect.free();
+	effectStart = 0;
+}

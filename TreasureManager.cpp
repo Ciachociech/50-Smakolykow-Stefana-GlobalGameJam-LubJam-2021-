@@ -66,6 +66,14 @@ bool TreasureManager::checkTile(int x, int y)
 	else { return false; }
 }
 
+void TreasureManager::exterminate()
+{
+	treasures.clear();
+	pairs.clear();
+	count = 0;
+	framesLeft = 0;
+}
+
 treasureType TreasureManager::randomizeType()
 {
 	switch (overand.randomNumber(1, 3))
