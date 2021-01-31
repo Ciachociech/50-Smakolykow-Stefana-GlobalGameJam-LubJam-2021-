@@ -80,6 +80,8 @@ void LayerManager::modeInterpreter(int mode, SDL_Renderer* renderer)
 		layers.back()->loadFromFile(560, 24, 1.f, 28.f, "Assets/frameV.png", renderer);
 		layers.back()->loadFromFile(1256, 24, 1.f, 28.f, "Assets/frameV.png", renderer);
 
+		layers.back()->loadFromFile(24, 48, 1.f, 1.f, "Assets/ingameLogo.png", renderer);
+
 		//pole
 		layers.back()->loadFromFile(584, 24, 1.f, 1.f, "Assets/boardEmpty.png", renderer);
 		layers.back()->loadFromFile(584 + 32 * 5, 24 + 32 * 5, 1.f, 1.f, "Assets/innerWall.png", renderer);

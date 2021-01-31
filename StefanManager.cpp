@@ -14,9 +14,9 @@ void StefanManager::setStefan(SDL_Renderer* renderer)
 {
 	if (baseMotivation > 0) { stefan = Stefan(584 + 32 * 10, 24 + 32 * 10, baseMotivation); }
 	else { stefan = Stefan(584 + 32 * 10, 24 + 32 * 10); }
-	stefan.loadFromFile(1.f, 1.f, 2, "Assets/stefan_idle.png", renderer);
+	stefan.loadFromFile(1.f, 1.f, 2, 2, "Assets/stefan_idle.png", renderer);
 	attachedEffect = Graph(584 + 320, 24 + 320 - 16);
-	attachedEffect.loadFromFile(1.f, 1.f, 4, "Assets/confuse.png", renderer);
+	attachedEffect.loadFromFile(1.f, 1.f, 4, 1, "Assets/confuse.png", renderer);
 }
 
 void StefanManager::moveStefan(int tileX, int tileY)
@@ -76,8 +76,8 @@ void StefanManager::moveStefan(int tileX, int tileY)
 
 	if (!stefan.getConfusion())
 	{
-		if (stefan.X() > destX) { stefan.setXY(stefan.X() - 4, stefan.Y()); }
-		else if (stefan.X() < destX) { stefan.setXY(stefan.X() + 4, stefan.Y()); }
+		if (stefan.X() > destX) { stefan.setXY(stefan.X() - 4, stefan.Y()); stefan.setSpriteSide(lookAt::left); }
+		else if (stefan.X() < destX) { stefan.setXY(stefan.X() + 4, stefan.Y()); stefan.setSpriteSide(lookAt::right); }
 		if (stefan.Y() > destY) { stefan.setXY(stefan.X(), stefan.Y() - 4); }
 		else if (stefan.Y() < destY) { stefan.setXY(stefan.X(), stefan.Y() + 4); }
 	}

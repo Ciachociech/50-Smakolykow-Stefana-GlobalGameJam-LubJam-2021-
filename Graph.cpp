@@ -1,8 +1,8 @@
 #include "Graph.h"
 
-Graph::Graph() : x(0), y(0), w(0), h(0), frames(1), currentFrame(0), scaleX(1.f), scaleY(1.f),texture(NULL) {}
+Graph::Graph() : x(0), y(0), w(0), h(0), frames(1), sides(1), currentFrame(0), scaleX(1.f), scaleY(1.f),texture(NULL), spriteSide(lookAt::left) {}
 
-Graph::Graph(int x, int y) : x(x), y(y), w(0), h(0), frames(1), currentFrame(0), scaleX(1.f), scaleY(1.f), texture(NULL) {}
+Graph::Graph(int x, int y) : x(x), y(y), w(0), h(0), frames(1), sides(1), currentFrame(0), scaleX(1.f), scaleY(1.f), texture(NULL), spriteSide(lookAt::left) {}
 
 Graph::~Graph() {}
 
@@ -35,7 +35,7 @@ bool Graph::loadFromFile(float scaleX, float scaleY, std::string filepath, SDL_R
 	return this->texture != NULL;
 }
 
-bool Graph::loadFromFile(float scaleX, float scaleY, int frames, std::string filepath, SDL_Renderer* renderer)
+bool Graph::loadFromFile(float scaleX, float scaleY, int frames, int sides, std::string filepath, SDL_Renderer* renderer)
 {
 	free();
 
@@ -50,10 +50,11 @@ bool Graph::loadFromFile(float scaleX, float scaleY, int frames, std::string fil
 		else
 		{
 			this->w = surface->w / frames;
-			this->h = surface->h;
+			this->h = surface->h / sides;
 			this->scaleX = scaleX;
 			this->scaleY = scaleY;
 			this->frames = frames;
+			this->sides = sides;
 		}
 
 		SDL_FreeSurface(surface);
@@ -108,7 +109,7 @@ void Graph::free()
 void Graph::render(int x, int y, SDL_Renderer* renderer)
 {
 	if (frames > 1) { ++currentFrame; }
-	SDL_Rect srcRenderQuad = { ((currentFrame + 1) / (30 / frames)) % frames * w, 0, w, h };
+	SDL_Rect srcRenderQuad = { ((currentFrame + 1) / (30 / frames)) % frames * w, (int) (spriteSide) * h, w, h };
 	SDL_Rect dstRenderQuad = { this->x + x, this->y + y, scaleX * w, scaleY * h };
 	SDL_RenderCopy(renderer, texture, &srcRenderQuad, &dstRenderQuad);
 }
@@ -116,7 +117,7 @@ void Graph::render(int x, int y, SDL_Renderer* renderer)
 void Graph::render(SDL_Renderer* renderer)
 {
 	if (frames > 1) { ++currentFrame; }
-	SDL_Rect srcRenderQuad = { ((currentFrame + 1) / (30 / frames)) % frames * w, 0, w, h };
+	SDL_Rect srcRenderQuad = { ((currentFrame + 1) / (30 / frames)) % frames * w, (int)(spriteSide) * h, w, h };
 	SDL_Rect dstRenderQuad = { this->x, this->y, scaleX * w, scaleY * h };
 	SDL_RenderCopy(renderer, texture, &srcRenderQuad, &dstRenderQuad);
 }
@@ -130,3 +131,5 @@ void Graph::setXY(int x, int y)
 	this->x = x;
 	this->y = y;
 }
+
+void Graph::setSpriteSide(lookAt newSide) { spriteSide = newSide; }
