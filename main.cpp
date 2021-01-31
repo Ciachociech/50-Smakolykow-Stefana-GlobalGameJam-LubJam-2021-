@@ -150,16 +150,15 @@ bool loop()
 
 		if (tm.getFramesLeft() == 0)
 		{
-			//printf("You won!");
 			level++;
 			gameInit();
 			SDL_Delay(2000);
 		}
 		if (sm.getStefan().getMotivation() <= 0)
 		{
-			//printf("You lose!"); 
+			level = 1;
+			gameInit();
 			SDL_Delay(2000);
-			quit = true;
 		}
 
 		sm.moveStefan(tileX, tileY);
