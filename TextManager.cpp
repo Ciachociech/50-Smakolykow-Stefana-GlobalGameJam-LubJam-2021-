@@ -8,24 +8,20 @@ void TextManager::initalize(TTF_Font* font, SDL_Renderer* renderer)
 {
 	SDL_Color color1 = overand.randomColor(), color2 = overand.randomColor(), color3 = overand.randomColor();
 	
-	texts.push_back(std::make_unique<Text>());
+	texts.push_back(std::make_unique<Text>(48, 472));
 	texts.back()->loadFromText("Poziom:", color1, renderer, font);
-	texts.back()->setXY(36, 200);
-	texts.push_back(std::make_unique<Text>());
+	texts.push_back(std::make_unique<Text>(48, 528));
 	texts.back()->loadFromText("Motywacja:", color2, renderer, font);
-	texts.back()->setXY(36, 300);
-	texts.push_back(std::make_unique<Text>());
+	texts.push_back(std::make_unique<Text>(48, 584));
 	texts.back()->loadFromText("Kafelki do odkrycia:", color3, renderer, font);
-	texts.back()->setXY(36, 400);
-	texts.push_back(std::make_unique<Text>());
+	texts.push_back(std::make_unique<Text>(536, 472, false));
 	texts.back()->loadFromText("0", color1, renderer, font);
-	texts.back()->setXY(336, 200);
-	texts.push_back(std::make_unique<Text>());
+	texts.push_back(std::make_unique<Text>(536, 528, false));
 	texts.back()->loadFromText("-1:", color2, renderer, font);
-	texts.back()->setXY(336, 300);
-	texts.push_back(std::make_unique<Text>());
+	texts.push_back(std::make_unique<Text>(536, 584, false));
 	texts.back()->loadFromText("-1", color3, renderer, font);
-	texts.back()->setXY(336, 400);
+	texts.push_back(std::make_unique<Text>(48, 640));
+	texts.back()->loadFromText(u8"[P] - instrukcja sterowania", color3, renderer, font);
 }
 
 void TextManager::update(std::string newValue, int index, TTF_Font* font, SDL_Renderer* renderer)

@@ -30,6 +30,7 @@ bool Graph::loadFromFile(float scaleX, float scaleY, std::string filepath, SDL_R
 		SDL_FreeSurface(surface);
 	}
 
+	firstInit = false;
 	this->texture = texture;
 	return this->texture != NULL;
 }
@@ -58,11 +59,12 @@ bool Graph::loadFromFile(float scaleX, float scaleY, int frames, std::string fil
 		SDL_FreeSurface(surface);
 	}
 
+	firstInit = false;
 	this->texture = texture;
 	return this->texture != NULL;
 }
 
-bool Graph::loadFromText(std::string textureText, SDL_Color textColor, SDL_Renderer* renderer, TTF_Font* font)
+bool Graph::loadFromText(std::string textureText, SDL_Color textColor, SDL_Renderer* renderer, TTF_Font* font, bool isLeftside)
 {
 	free();
 
@@ -82,11 +84,13 @@ bool Graph::loadFromText(std::string textureText, SDL_Color textColor, SDL_Rende
 		{
 			this->w = textSurface->w / frames;
 			this->h = textSurface->h;
+			if (!isLeftside && firstInit) { x -= this->w; }
 		}
 
 		SDL_FreeSurface(textSurface);
 	}
 
+	firstInit = false;
 	return texture != NULL;
 }
 

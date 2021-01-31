@@ -94,7 +94,7 @@ bool loadMedia()
 	bool success = true;
 
 	//https://www.dafont.com/wash-your-hand.font
-	font = TTF_OpenFont("Assets/WashYourHand.ttf", 30);
+	font = TTF_OpenFont("Assets/WashYourHand.ttf", 32);
 	if (font == NULL)
 	{
 		printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
@@ -139,6 +139,20 @@ bool loop()
 			}
 		}
 
+		if (tm.getFramesLeft() == 0)
+		{
+			//printf("You won!");
+			level++;
+			gameInit();
+			SDL_Delay(2000);
+		}
+		if (sm.getStefan().getMotivation() <= 0)
+		{
+			//printf("You lose!"); 
+			SDL_Delay(2000);
+			quit = true;
+		}
+
 		sm.moveStefan(tileX, tileY);
 		if (actualAction == keyAction::digging) 
 		{
@@ -152,21 +166,17 @@ bool loop()
 			{
 				txtm.update(std::to_string(tm.getFramesLeft()), 5, font, windowRenderer);
 			}
-			if (tm.getFramesLeft() == 0)
-			{
-				//printf("You won!");
-				level++;
-				gameInit();
-				SDL_Delay(2000);
-			}
-			if (sm.getStefan().getMotivation() <= 0) 
-			{ 
-				//printf("You lose!"); 
-				SDL_Delay(2000);
-				quit = true;
-			}
 		}
-		if (actualAction == keyAction::mischievous) 
+
+		SDL_RenderClear(windowRenderer);
+
+		txtm.render(windowRenderer);
+		lm.render(0, 0, 0, windowRenderer);
+		tm.render(windowRenderer);
+		lm.render(0, 0, 1, windowRenderer);
+		sm.render(windowRenderer);
+
+		if (actualAction == keyAction::mischievous || actualAction == keyAction::anotherEvil || actualAction == keyAction::steeringHelp) 
 		{
 			bool loop = true;
 			SDL_Event event;
@@ -179,20 +189,17 @@ bool loop()
 					case SDL_QUIT: case SDL_KEYDOWN: { loop = false; break; }
 					}
 				}
-				SDL_RenderClear(windowRenderer);
-				lm.render(-1, windowRenderer);
+				switch (actualAction)
+				{
+				case keyAction::mischievous: { lm.render(-1, windowRenderer); break; }
+				case keyAction::anotherEvil: { lm.render(-2, windowRenderer); break; }
+				case keyAction::steeringHelp: { lm.render(-3, windowRenderer); break; }
+				default: { break; }
+				}
 				SDL_RenderPresent(windowRenderer);
 			}
 
 		}
-
-		SDL_RenderClear(windowRenderer);
-
-		txtm.render(windowRenderer);
-		lm.render(0, 0, 0, windowRenderer);
-		tm.render(windowRenderer);
-		lm.render(0, 0, 1, windowRenderer);
-		sm.render(windowRenderer);
 
 		//SDL_UpdateWindowSurface(window);
 		SDL_RenderPresent(windowRenderer);

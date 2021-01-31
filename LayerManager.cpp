@@ -1,6 +1,6 @@
 #include "LayerManager.h"
 
-LayerManager::LayerManager() : layers(), overand(), bonus() {}
+LayerManager::LayerManager() : layers(), overand(), bonus1(), bonus2(), helpMe() {}
 
 LayerManager::~LayerManager() {}
 
@@ -20,13 +20,25 @@ void LayerManager::render(int x, int y, SDL_Renderer* renderer)
 
 void LayerManager::render(int mode, SDL_Renderer* renderer)
 {
-	if (mode == -1) { bonus.render(renderer); }
+	switch (mode)
+	{
+	case -1: { bonus1.render(renderer); break; }
+	case -2: { bonus2.render(renderer); break; }
+	case -3: { helpMe.render(renderer); break; }
+	default: { break; }
+	}
 }
 
 void LayerManager::render(int x, int y, int mode, SDL_Renderer* renderer)
 {
-	if (mode == -1) { bonus.render(x, y, renderer); }
-	else if (mode >= 0 && mode < layers.size())
+	switch (mode)
+	{
+	case -1: { bonus1.render(renderer); break; }
+	case -2: { bonus2.render(renderer); break; }
+	case -3: { helpMe.render(renderer); break; }
+	default: { break; }
+	}
+	if (mode >= 0 && mode < layers.size())
 	{
 		layers[mode]->render(x, y, renderer);
 	}
@@ -39,7 +51,9 @@ bool LayerManager::disableTile(int x, int y)
 
 void LayerManager::exterminate()
 {
-	bonus.free();
+	bonus1.free();
+	bonus2.free();
+	helpMe.free();
 	for (int i = 0; i < layers.size(); i++)
 	{
 		layers[i]->exterminate();
@@ -54,7 +68,6 @@ void LayerManager::modeInterpreter(int mode, SDL_Renderer* renderer)
 	case 0:
 	{
 		//ramka
-		layers.back()->loadFromFile(0, 0, 1.f, 1.f, "Assets/debug_background.png", renderer);
 		layers.back()->loadFromFile(0, 0, 1.f, 1.f, "Assets/frameCone.png", renderer);
 		layers.back()->loadFromFile(24, 0, 51.34f, 1.f, "Assets/frameH.png", renderer);
 		layers.back()->loadFromFile(560, 0, 1.f, 1.f, "Assets/frameCone.png", renderer);
@@ -76,7 +89,17 @@ void LayerManager::modeInterpreter(int mode, SDL_Renderer* renderer)
 		modeInterpreter(-1, renderer);
 		break;
 	}
-	case -1: { bonus = Graph(0, 0); bonus.loadFromFile(1.f, 1.f, "Assets/haveANiceDay.png", renderer); break; }
+	case -1: 
+	{ 
+		bonus1 = Graph(0, 0); 
+		bonus1.loadFromFile(1.f, 1.f, "Assets/haveANiceDay.png", renderer); 
+		bonus2 = Graph(0, 0); 
+		bonus2.loadFromFile(1.f, 1.f, "Assets/haveANiceDay.png", renderer);
+		helpMe = Graph(0, 0); 
+		helpMe.loadFromFile(1.f, 1.f, "Assets/helpMe.png", renderer);
+
+		break; 
+	}
 	case 1:
 	{
 		for (int r = 0; r < 21; r++)

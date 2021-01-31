@@ -22,5 +22,5 @@ private:
 	VecGraphLayer layers;
 	void modeInterpreter(int mode, SDL_Renderer* renderer);
 	OverworldRandomizer overand;
-	Graph bonus;
+	Graph bonus1, helpMe, bonus2;
 };

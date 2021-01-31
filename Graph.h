@@ -11,7 +11,7 @@ public:
 
 	bool loadFromFile(float scaleX, float scaleY, std::string filepath, SDL_Renderer* renderer);
 	bool loadFromFile(float scaleX, float scaleY, int frames, std::string filepath, SDL_Renderer* renderer);
-	bool loadFromText(std::string textureText, SDL_Color textColor, SDL_Renderer* renderer, TTF_Font* font);
+	bool loadFromText(std::string textureText, SDL_Color textColor, SDL_Renderer* renderer, TTF_Font* font, bool isLeftside);
 	void free();
 	virtual void render(int x, int y, SDL_Renderer* renderer);
 	virtual void render(SDL_Renderer* renderer);
@@ -27,5 +27,6 @@ private:
 	int w, h;
 	float scaleX, scaleY;
 	int frames, currentFrame = 0;
+	bool firstInit = true;
 };
 
