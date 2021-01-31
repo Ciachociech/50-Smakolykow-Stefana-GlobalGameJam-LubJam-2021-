@@ -1,8 +1,8 @@
 #include "Graph.h"
 
-Graph::Graph() : x(0), y(0), w(0), h(0), frames(1), currentFrame(0), texture(NULL) {}
+Graph::Graph() : x(0), y(0), w(0), h(0), frames(1), currentFrame(0), scaleX(1.f), scaleY(1.f),texture(NULL) {}
 
-Graph::Graph(int x, int y) : x(x), y(y), w(0), h(0), frames(1), currentFrame(0), texture(NULL) {}
+Graph::Graph(int x, int y) : x(x), y(y), w(0), h(0), frames(1), currentFrame(0), scaleX(1.f), scaleY(1.f), texture(NULL) {}
 
 Graph::~Graph() {}
 
@@ -13,7 +13,7 @@ bool Graph::loadFromFile(float scaleX, float scaleY, std::string filepath, SDL_R
 	SDL_Texture* texture = NULL;
 
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
-	if (surface == NULL) { printf("Unable to load image %s! SDL Error: %s\n", "bariera.bmp", SDL_GetError()); }
+	if (surface == NULL) { printf("Unable to load image %s! SDL Error: %s\n", filepath.c_str(), SDL_GetError()); }
 	else
 	{
 		texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -41,7 +41,7 @@ bool Graph::loadFromFile(float scaleX, float scaleY, int frames, std::string fil
 	SDL_Texture* texture = NULL;
 
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
-	if (surface == NULL) { printf("Unable to load image %s! SDL Error: %s\n", "bariera.bmp", SDL_GetError()); }
+	if (surface == NULL) { printf("Unable to load image %s! SDL Error: %s\n", filepath.c_str(), SDL_GetError()); }
 	else
 	{
 		texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -60,6 +60,34 @@ bool Graph::loadFromFile(float scaleX, float scaleY, int frames, std::string fil
 
 	this->texture = texture;
 	return this->texture != NULL;
+}
+
+bool Graph::loadFromText(std::string textureText, SDL_Color textColor, SDL_Renderer* renderer, TTF_Font* font)
+{
+	free();
+
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, textureText.c_str(), textColor);
+	if (textSurface == NULL)
+	{
+		printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+	}
+	else
+	{
+		texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+		if (texture == NULL)
+		{
+			printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+		}
+		else
+		{
+			this->w = textSurface->w / frames;
+			this->h = textSurface->h;
+		}
+
+		SDL_FreeSurface(textSurface);
+	}
+
+	return texture != NULL;
 }
 
 void Graph::free()

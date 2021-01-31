@@ -5,6 +5,7 @@
 #include "StefanManager.h"
 #include "SteeringManager.h"
 #include "TreasureManager.h"
+#include "TextManager.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;
@@ -14,6 +15,7 @@ const int SCREEN_HEIGHT = 720;
 SDL_Window* window = NULL;
 SDL_Surface* windowSurface = NULL;
 SDL_Renderer* windowRenderer = NULL;
+TTF_Font* font = NULL;
 
 //Other constants
 const int FPS = 60;
@@ -23,6 +25,7 @@ LayerManager lm = LayerManager();
 TreasureManager tm = TreasureManager();
 StefanManager sm = StefanManager();
 SteeringManager sterman = SteeringManager();
+TextManager txtm = TextManager();
 int level = 1;
 
 bool init();
@@ -71,7 +74,14 @@ bool init()
 			}
 			else
 			{
+				SDL_SetRenderDrawColor(windowRenderer, 32, 32, 32, 0xFF);
+
 				windowSurface = SDL_GetWindowSurface(window);
+				if (TTF_Init() == -1)
+				{
+					printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+					success = false;
+				}
 			}
 		}
 	}
@@ -81,7 +91,17 @@ bool init()
 
 bool loadMedia()
 {
-	return true;
+	bool success = true;
+
+	//https://www.dafont.com/wash-your-hand.font
+	font = TTF_OpenFont("Assets/WashYourHand.ttf", 30);
+	if (font == NULL)
+	{
+		printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
+		success = false;
+	}
+	
+	return success;
 }
 
 void close()
@@ -103,8 +123,6 @@ bool loop()
 	Uint32 frameTime;
 	keyAction actualAction;
 
-	SDL_SetRenderDrawColor(windowRenderer, 32, 32, 32, 0xFF);
-
 	while (!quit)
 	{
 		tileX = 0, tileY = 0;
@@ -125,19 +143,27 @@ bool loop()
 		if (actualAction == keyAction::digging) 
 		{
 			bool dug = lm.disableTile(sm.getStefan().X(), sm.getStefan().Y());
-			if (dug) { sm.reduceMotivation(); }
-			if (sm.getStefan().getMotivation() <= 0) 
+			if (dug) 
 			{ 
-				printf("You lose!"); 
-				SDL_Delay(2000);
-				quit = true;
+				sm.reduceMotivation(); 
+				txtm.update(std::to_string(sm.getStefan().getMotivation()), 4, font, windowRenderer);
 			}
-			if (tm.checkTile(sm.getStefan().X(), sm.getStefan().Y()) && tm.getFramesLeft() == 0) 
+			if (tm.checkTile(sm.getStefan().X(), sm.getStefan().Y()))
 			{
-				printf("You won!");
+				txtm.update(std::to_string(tm.getFramesLeft()), 5, font, windowRenderer);
+			}
+			if (tm.getFramesLeft() == 0)
+			{
+				//printf("You won!");
 				level++;
 				gameInit();
 				SDL_Delay(2000);
+			}
+			if (sm.getStefan().getMotivation() <= 0) 
+			{ 
+				//printf("You lose!"); 
+				SDL_Delay(2000);
+				quit = true;
 			}
 		}
 		if (actualAction == keyAction::mischievous) 
@@ -162,6 +188,7 @@ bool loop()
 
 		SDL_RenderClear(windowRenderer);
 
+		txtm.render(windowRenderer);
 		lm.render(0, 0, 0, windowRenderer);
 		tm.render(windowRenderer);
 		lm.render(0, 0, 1, windowRenderer);
@@ -189,5 +216,11 @@ void gameInit()
 	sm.exterminate();
 	sm.setStefan(windowRenderer);
 	sm.setMotivation(79 - (level > 10 ? 20 : 2 * level) + 4 * tm.getCount());
+
+	txtm.exterminate();
+	txtm.initalize(font, windowRenderer);
+	txtm.update(std::to_string(level), 3, font, windowRenderer);
+	txtm.update(std::to_string(sm.getStefan().getMotivation()), 4, font, windowRenderer);
+	txtm.update(std::to_string(tm.getFramesLeft()), 5, font, windowRenderer);
 }
 
